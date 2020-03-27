@@ -19,7 +19,7 @@ namespace tweet {
 		proto::FollowOut out;
 		auto status = stub_->Follow(&client_context, in, &out);
 		if (!status.ok())
-			throw std::runtime_error("Couldn't follow : " + in.user());
+			throw std::runtime_error("Couldn't follow : " + in.name());
 
 		return out;
 	}

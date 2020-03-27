@@ -7,8 +7,8 @@ namespace tweet {
 		const proto::TweetIn* request, 
 		proto::TweetOut* response)
 	{
-#pragma message ("You have to complete this code!")
-		return {};
+		response->set_error(storage_->Tweet(context->peer(), request->content()));
+		return grpc::Status::OK;
 	}
 
 	grpc::Status Server::Follow(
@@ -16,8 +16,8 @@ namespace tweet {
 		const proto::FollowIn* request, 
 		proto::FollowOut* response)
 	{
-#pragma message ("You have to complete this code!")
-		return {};
+		response->set_error(storage_->Follow(context->peer(), request->name()));
+		return grpc::Status::OK;
 	}
 
 	grpc::Status Server::Show(
@@ -25,8 +25,15 @@ namespace tweet {
 		const proto::ShowIn* request, 
 		proto::ShowOut* response)
 	{
-#pragma message ("You have to complete this code!")
-		return {};
+		std::vector<TweetValue> tweets = storage_->Show(context->peer(), request->user());
+        for(TweetValue tweet : tweets) {
+			proto::TweetIn* newTweet = response->add_tweets();
+			newTweet->set_user(tweet.name);
+			newTweet->set_content(tweet.text);
+			newTweet->set_time(tweet.time);
+        }
+		
+		return grpc::Status::OK;
 	}
 
 	grpc::Status Server::Login(
@@ -34,8 +41,8 @@ namespace tweet {
 		const proto::LoginIn* request, 
 		proto::LoginOut* response)
 	{
-#pragma message ("You have to complete this code!")
-		return {};
+		response->set_error(storage_->Login(context->peer(), request->user(), request->pass()));
+		return grpc::Status::OK;
 	}
 
 	grpc::Status Server::Logout(
@@ -43,8 +50,8 @@ namespace tweet {
 		const proto::LogoutIn* request, 
 		proto::LogoutOut* response)
 	{
-#pragma message ("You have to complete this code!")
-		return {};
+		response->set_error(storage_->Logout(context->peer()));
+		return grpc::Status::OK;
 	}
 
 	grpc::Status Server::Register(
@@ -52,8 +59,8 @@ namespace tweet {
 		const proto::RegisterIn* request, 
 		proto::RegisterOut* response)
 	{
-#pragma message ("You have to complete this code!")
-		return {};
+		response->set_error(storage_->Register(context->peer(), request->name(), request->pass()));
+		return grpc::Status::OK;
 	}
 
 } // End namespace tweet.

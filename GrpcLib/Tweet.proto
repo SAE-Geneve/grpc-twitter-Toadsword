@@ -35,8 +35,7 @@ message TweetOut{
 }
 
 message FollowIn{
-	string user = 1;
-	string name = 2;
+	string name = 1;
 }
 message FollowOut{
 	bool error = 1;
@@ -52,24 +51,20 @@ message ShowOut{
 
 message LoginIn{
 	string user = 1;
-	string username = 2;
-	string pass = 3;
+	string pass = 2;
 }
 message LoginOut{
 	bool error = 1;
 }
 
-message LogoutIn{
-	string user = 1;
-}
+message LogoutIn{}
 message LogoutOut{
 	bool error = 1;
 }
 
 message RegisterIn{
-	string user = 1;
-	string name = 2;
-	string pass = 3;
+	string name = 1;
+	string pass = 2;
 }
 message RegisterOut{
 	bool error = 1;
