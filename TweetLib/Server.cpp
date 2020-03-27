@@ -7,7 +7,7 @@ namespace tweet {
 		const proto::TweetIn* request, 
 		proto::TweetOut* response)
 	{
-		response->set_error(storage_->Tweet(context->peer(), request->content()));
+		response->set_error(!storage_->Tweet(context->peer(), request->content()));
 		return grpc::Status::OK;
 	}
 
@@ -16,7 +16,7 @@ namespace tweet {
 		const proto::FollowIn* request, 
 		proto::FollowOut* response)
 	{
-		response->set_error(storage_->Follow(context->peer(), request->name()));
+		response->set_error(!storage_->Follow(context->peer(), request->name()));
 		return grpc::Status::OK;
 	}
 
@@ -32,6 +32,7 @@ namespace tweet {
 			newTweet->set_content(tweet.text);
 			newTweet->set_time(tweet.time);
         }
+		response->set_error(true);
 		
 		return grpc::Status::OK;
 	}
@@ -41,7 +42,7 @@ namespace tweet {
 		const proto::LoginIn* request, 
 		proto::LoginOut* response)
 	{
-		response->set_error(storage_->Login(context->peer(), request->user(), request->pass()));
+		response->set_error(!storage_->Login(context->peer(), request->user(), request->pass()));
 		return grpc::Status::OK;
 	}
 
@@ -50,7 +51,7 @@ namespace tweet {
 		const proto::LogoutIn* request, 
 		proto::LogoutOut* response)
 	{
-		response->set_error(storage_->Logout(context->peer()));
+		response->set_error(!storage_->Logout(context->peer()));
 		return grpc::Status::OK;
 	}
 
@@ -59,7 +60,7 @@ namespace tweet {
 		const proto::RegisterIn* request, 
 		proto::RegisterOut* response)
 	{
-		response->set_error(storage_->Register(context->peer(), request->name(), request->pass()));
+		response->set_error(!storage_->Register(context->peer(), request->name(), request->pass()));
 		return grpc::Status::OK;
 	}
 
